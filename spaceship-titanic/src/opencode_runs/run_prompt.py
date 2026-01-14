@@ -39,13 +39,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--mode",
         choices=("stdin", "arg"),
-        default="stdin",
+        default="arg",
         help="How to pass the prompt to opencode (stdin or prompt flag).",
     )
     parser.add_argument(
         "--prompt-flag",
-        default="--prompt-file",
-        help="Flag to use when mode=arg (e.g., --prompt or --prompt-file).",
+        default="-f",
+        help="Flag to use when mode=arg (use -f/--file for opencode).",
     )
     parser.add_argument(
         "--cwd",
@@ -68,12 +68,16 @@ def build_command(
     mode: str,
     prompt_flag: str,
 ) -> tuple[list[str], Optional[str]]:
-    cmd = [opencode_bin, "run"]
+    cmd = [opencode_bin]
     if config_path is not None:
         cmd.extend(["--config", str(config_path)])
+    cmd.append("run")
 
     if mode == "arg":
+        # opencode는 --file/-f로 파일 첨부를 받음
         cmd.extend([prompt_flag, str(prompt_path)])
+        # 메시지가 비면 아무 것도 안 할 수 있어서 짧은 지시를 같이 보냄
+        cmd.append("Please read and execute the instructions in the attached file.")
         return cmd, None
 
     prompt_text = prompt_path.read_text(encoding="utf-8")
@@ -104,6 +108,7 @@ def main() -> int:
         cmd,
         input=stdin_text,
         text=True,
+        encoding="utf-8",
         cwd=str(args.cwd),
     )
     return result.returncode
