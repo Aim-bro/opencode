@@ -1,0 +1,16 @@
+# Feature Experiments (CatBoost CV)
+
+| experiment                        | spending_ratios   | deck_unknown   | group_diversity   | group_aggregates   | interactions   |   mean_auc |    std_auc |   best_threshold |   best_oof_acc |   n_features |   n_categorical |
+|:----------------------------------|:------------------|:---------------|:------------------|:-------------------|:---------------|-----------:|-----------:|-----------------:|---------------:|-------------:|----------------:|
+| ratios_only                       | True              | False          | False             | False              | False          |   0.90606  | 0.0063014  |            0.5   |       0.817784 |           23 |               7 |
+| ratios_plus_group_aggregates      | True              | False          | False             | True               | False          |   0.90606  | 0.0063014  |            0.5   |       0.817784 |           23 |               7 |
+| deck_unknown_only                 | False             | True           | False             | False              | False          |   0.905862 | 0.00694904 |            0.535 |       0.817094 |           22 |               7 |
+| all_upgrades                      | True              | True           | True              | False              | True           |   0.905222 | 0.00613878 |            0.5   |       0.816519 |           30 |               9 |
+| group_aggregates_only             | False             | False          | False             | True               | False          |   0.905438 | 0.00649341 |            0.49  |       0.815484 |           21 |               7 |
+| baseline_only                     | False             | False          | False             | False              | False          |   0.905438 | 0.00649341 |            0.49  |       0.815484 |           21 |               7 |
+| group_diversity_only              | False             | False          | True              | False              | False          |   0.9057   | 0.00631651 |            0.495 |       0.815024 |           24 |               7 |
+| ratios_plus_interactions          | True              | False          | False             | False              | True           |   0.903852 | 0.00677347 |            0.515 |       0.814563 |           26 |               9 |
+| ratios_plus_deck_unknown          | True              | True           | False             | False              | False          |   0.904099 | 0.0060471  |            0.515 |       0.814103 |           24 |               7 |
+| ratios_plus_group_diversity       | True              | False          | True              | False              | False          |   0.905013 | 0.00669965 |            0.505 |       0.813643 |           26 |               7 |
+| group_diversity_plus_interactions | False             | False          | True              | False              | True           |   0.904388 | 0.00662198 |            0.52  |       0.813413 |           27 |               9 |
+| interactions_only                 | False             | False          | False             | False              | True           |   0.903981 | 0.00713524 |            0.47  |       0.813068 |           24 |               9 |

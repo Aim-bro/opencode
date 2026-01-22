@@ -1,25 +1,45 @@
-# Prompt: Modeling (Baseline)
+You are a senior ML engineer.
 
-Role: senior data analyst + practical ML engineer.
+You must strictly follow the confirmed decisions in docs/decisions.md.
+Do NOT invent new preprocessing or modeling steps.
 
-Goal
-- Build a baseline modeling plan with verifiable steps.
+## Objective
+Build a strong Kaggle-grade baseline model for Spaceship Titanic.
 
-Data
-- data/raw/train.csv
-- data/raw/test.csv
+## Mandatory preprocessing
+- Drop Name
+- PassengerId:
+  - Extract GroupId (prefix before "_")
+  - Compute GroupSize and IsAlone
+- Spending:
+  - TotalSpending = sum of all spending columns
+  - HasSpending flag
+  - Impute spending columns with 0
+  - EXCEPTION: Spa must be imputed by median per HomePlanet
+- CryoSleep:
+  - If TotalSpending > 0 -> False
+  - If TotalSpending == 0 -> True
+- Cabin:
+  - Extract Deck, CabinNum, Side
+  - Bin CabinNum
+- Age:
+  - Create AgeGroup bins
+- Family:
+  - Extract last name
+  - FamilySize
+- Add missing indicator flags where appropriate
 
-Constraints
-- Treat all modeling suggestions as hypotheses.
-- Report assumptions and how to validate them.
+## Model
+- Use CatBoostClassifier
+- Use native categorical features (NO one-hot)
+- NO scaling
 
-Tasks
-1) Define a baseline pipeline (preprocess + model).
-2) Specify train/validation split strategy and metrics.
-3) Identify 2-3 candidate models for a fast baseline.
-4) Provide a minimal reproducible training loop outline.
+## Validation
+- StratifiedKFold (n_splits=5, shuffle=True, random_state=42)
+- Metric: ROC-AUC
 
-Output format
-- Pipeline: steps with brief rationale.
-- Validation: metrics + expected output artifacts.
-- Risks: leakage, target distribution drift, and feature stability.
+## Outputs
+- outputs/04_cv_results.md
+- src/models/catboost_baseline.py
+- Explicit feature list used
+- Fold-wise and mean CV scores
