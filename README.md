@@ -1,15 +1,8 @@
-# 🧠 Project Bootstrap Prompt (for new machine)
-
-You are a senior data scientist and ML engineer.
+# 🧠 Project Bootstrap
 
 This repository contains an LLM-assisted Kaggle-style ML pipeline for the
 Spaceship Titanic dataset.
 
-Your job is to:
-- Use prompts in `spaceship-titanic/prompts/`
-- Run them via OpenCode (glm-4.7 model)
-- Store outputs in `spaceship-titanic/outputs/`
-- Record key modeling decisions in `spaceship-titanic/docs/decisions.md`
 
 ## Current state
 
@@ -30,13 +23,4 @@ Automation:
 - outputs/ stores LLM outputs
 - docs/decisions.md stores human-approved decisions
 
-## Goal
 
-Produce a Kaggle-grade baseline pipeline with:
-- Reproducible EDA
-- Justified missing-value strategy
-- Feature engineering backed by data
-- Baseline ML model with CV
-- Written technical decisions
-
-Never skip logging important choices into `docs/decisions.md`
